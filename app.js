@@ -21,7 +21,7 @@ let lastTransactionHash;
 
 async function monitorContract() {
   const contract = new web3.eth.Contract(abi, process.env.CONTRACT_ADDRESS);
-
+  testTrigger(any);
   contract.events
     .Transfer({})
     .on('connected', (subscriptionId) => {
@@ -179,4 +179,3 @@ async function getTokenData(tokenId) {
 
 // initate websocket connection
 monitorContract();
-testTrigger(any);
