@@ -23,13 +23,13 @@ async function monitorContract() {
   const contract = new web3.eth.Contract(abi, process.env.CONTRACT_ADDRESS);
 
   contract.events
-    .Transfer({fromBlock:14480381})
+    .Transfer({fromBlock:14479948})
     .on('connected', (subscriptionId) => {
       console.log(subscriptionId);
     })
     .on('data', async (data) => {
-      //const transactionHash = data.transactionHash.toLowerCase();
-      const transactionHash = "0xbaaf43daf184650016ad75539bf2a77c0159865d1b4c7a217c4b40bea66a433e";
+      const transactionHash = data.transactionHash.toLowerCase();
+      //const transactionHash = "0xbaaf43daf184650016ad75539bf2a77c0159865d1b4c7a217c4b40bea66a433e"; // for testing only
 
       // duplicate transaction - skip process
       if (transactionHash == lastTransactionHash) {
