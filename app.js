@@ -179,4 +179,4 @@ async function getTokenData(tokenId) {
 
 // initate websocket connection
 monitorContract();
-testTrigger();
+testTrigger(any);
