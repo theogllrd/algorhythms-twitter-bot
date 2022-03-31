@@ -27,8 +27,9 @@ async function monitorContract() {
     .on('connected', (subscriptionId) => {
       console.log(subscriptionId);
     })
-    .on('data', async (data) => {
-      const transactionHash = data.transactionHash.toLowerCase();
+    .on('data', function testTrigger(data) {
+      //const transactionHash = data.transactionHash.toLowerCase();
+      const transactionHash = "0xbaaf43daf184650016ad75539bf2a77c0159865d1b4c7a217c4b40bea66a433e";
 
       // duplicate transaction - skip process
       if (transactionHash == lastTransactionHash) {
@@ -178,3 +179,5 @@ async function getTokenData(tokenId) {
 
 // initate websocket connection
 monitorContract();
+
+testTrigger();
