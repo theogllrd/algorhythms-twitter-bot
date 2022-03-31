@@ -20,7 +20,7 @@ const web3 = createAlchemyWeb3(
 let lastTransactionHash;
 
 async function monitorContract() {
-  const contract = new web3.eth.Contract(abi, process.env.CONTRACT_ADDRESS);
+  const contract = await new web3.eth.Contract(abi, process.env.CONTRACT_ADDRESS);
 
   contract.events
     .Transfer({})
