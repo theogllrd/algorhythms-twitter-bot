@@ -15,15 +15,7 @@ async function tweet(tweetText) {
         status: tweetText,
     };
 
-    /*twitterClient.post('statuses/update', tweet, (error, tweet, response) => {
-        if (!error) {
-            console.log(`Successfully tweeted: ${tweetText}`);
-        } else {
-            console.error(error);
-        }
-    });*/
-    var filePath = 'https://ipfs.io/ipfs/QmcphuTiyoMByJkPWuiMXpiVxojs2YReYbN6jaJdi7KSw3/64000000.mp4';
-    twitterClient.postMediaChunked({ file_path: filePath }, 'statuses/update', tweet, (error, tweet, response) => {
+    twitterClient.post('statuses/update',media_ids=1509931173220429830, tweet, (error, tweet, response) => {
         if (!error) {
             console.log(`Successfully tweeted: ${tweetText}`);
         } else {
