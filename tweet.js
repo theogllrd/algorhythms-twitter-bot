@@ -13,9 +13,12 @@ const twitterClient = new twit(twitterConfig);
 async function tweet(tweetText) {
     const tweet = {
         status: tweetText,
+        media_ids: 1509931173220429830,
     };
 
-    twitterClient.post('statuses/update',media_ids=1509931173220429830, tweet, (error, tweet, response) => {
+    //twitterClient.post()
+
+    twitterClient.post('statuses/update', tweet, (error, tweet, response) => {
         if (!error) {
             console.log(`Successfully tweeted: ${tweetText}`);
         } else {
