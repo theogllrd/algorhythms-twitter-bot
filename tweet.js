@@ -13,7 +13,7 @@ const twitterClient = new twit(twitterConfig);
 async function tweet(tweetText) {
     const tweet = {
         status: tweetText,
-        media_ids: 1509936517954904068,
+        media_ids: 1509941134776279047,
     };
 
     twitterClient.post('statuses/update', tweet, (error, tweet, response) => {
