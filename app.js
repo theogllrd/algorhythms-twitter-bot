@@ -133,9 +133,7 @@ async function monitorContract() {
             tokenData,
             'assetName',
             `#` + tokens[0]
-          )} bought for ${totalPrice} ${currency.name} on ${market.name} ${
-            market.site
-          }${process.env.CONTRACT_ADDRESS}/${tokens[0]}`
+          )} bought for ${totalPrice} ${currency.name} on ${market.name} https://ipfs.io/ipfs/QmcphuTiyoMByJkPWuiMXpiVxojs2YReYbN6jaJdi7KSw3/64000${tokens[0]}.mp4`
         );
       }
     })
