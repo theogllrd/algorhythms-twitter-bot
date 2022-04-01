@@ -22,7 +22,7 @@ async function tweet(tweetText) {
             console.error(error);
         }
     });*/
-    var filePath = '/Users/theogaillard/Downloads/640008461.mp4';
+    var filePath = 'https://ipfs.io/ipfs/QmcphuTiyoMByJkPWuiMXpiVxojs2YReYbN6jaJdi7KSw3/64000000.mp4';
     twitterClient.postMediaChunked({ file_path: filePath }, 'statuses/update', tweet, (error, tweet, response) => {
         if (!error) {
             console.log(`Successfully tweeted: ${tweetText}`);
