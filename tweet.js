@@ -15,7 +15,15 @@ async function tweet(tweetText) {
         status: tweetText,
     };
 
-    twitterClient.post('statuses/update', tweet, (error, tweet, response) => {
+    /*twitterClient.post('statuses/update', tweet, (error, tweet, response) => {
+        if (!error) {
+            console.log(`Successfully tweeted: ${tweetText}`);
+        } else {
+            console.error(error);
+        }
+    });*/
+    var filePath = '/Users/theogaillard/Downloads/640008461.mp4';
+    twitterClient.postMediaChunked({ file_path: filePath }, 'statuses/update', tweet, (error, tweet, response) => {
         if (!error) {
             console.log(`Successfully tweeted: ${tweetText}`);
         } else {
