@@ -19,13 +19,22 @@ async function tweet(tweetText) {
         //media_ids: 1509941134776279047,
     };
 
+    let mediaAPPEND = {
+        command: 'APPEND',
+        media_type: 'video/mp4',
+        media_ids: 0,
+    };
+
     twitterClient.post('media/upload', mediaINIT, (error, mediaINIT, response) => {
         if (!error) {
-            console.log(`Successfully uploaded video: ${JSON.stringify(response['headers']['x-mediaid'])}`);
+            mediaAPPEND.media_ids = response['headers']['x-mediaid'];
+            console.log(`Successfully uploaded video: ${JSON.stringify(mediaAPPEND.media_ids)}`);
         } else {
             console.error(error);
         }
     });
+
+    
     
     
     
