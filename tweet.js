@@ -21,14 +21,23 @@ async function tweet(tweetText) {
 
     let mediaAPPEND = {
         command: 'APPEND',
-        media_type: 'video/mp4',
-        media_ids: 0,
+        segment_index: 0,
+        media_id: 0,
+        file: '/Users/theogaillard/Downloads/640008461.mp4',
     };
 
     twitterClient.post('media/upload', mediaINIT, (error, mediaINIT, response) => {
         if (!error) {
-            mediaAPPEND.media_ids = response['headers']['x-mediaid'];
+            mediaAPPEND.media_id = response['headers']['x-mediaid'];
             console.log(`Successfully uploaded video: ${JSON.stringify(mediaAPPEND.media_ids)}`);
+        } else {
+            console.error(error);
+        }
+    });
+
+    twitterClient.post('media/upload', mediaAPPEND, (error, mediaAPPEND, response) => {
+        if (!error) {
+            console.log(`Successfully uploaded video: ${JSON.stringify(response)}`);
         } else {
             console.error(error);
         }
@@ -44,13 +53,13 @@ async function tweet(tweetText) {
         //media_ids: 1509941134776279047,
     };
 
-    twitterClient.post('statuses/update', tweet, (error, tweet, response) => {
+    /*twitterClient.post('statuses/update', tweet, (error, tweet, response) => {
         if (!error) {
             console.log(`Successfully tweeted: ${tweetText}`);
         } else {
             console.error(error);
         }
-    });
+    });*/
 }
 
 
