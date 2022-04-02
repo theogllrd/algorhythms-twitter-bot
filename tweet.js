@@ -21,7 +21,7 @@ async function tweet(tweetText) {
 
     twitterClient.post('media/upload', media, (error, media, response) => {
         if (!error) {
-            console.log(`Successfully uploaded video: ${JSON.stringify(response)}`);
+            console.log(`Successfully uploaded video: ${JSON.stringify(response.headers)}`);
         } else {
             console.error(error);
         }
