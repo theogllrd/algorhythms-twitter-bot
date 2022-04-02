@@ -13,8 +13,8 @@ const twitterClient = new twit(twitterConfig);
 async function tweet(tweetText) {
     
     const media = {
-        command: INIT,
-        media_type: video/mp4,
+        command: 'INIT',
+        media_type: 'video/mp4',
         total_bytes: 1759785,
         //media_ids: 1509941134776279047,
     };
