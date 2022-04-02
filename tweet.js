@@ -24,25 +24,19 @@ async function tweet(tweetText) {
         command: 'APPEND',
         segment_index: 0,
         media_id: 0,
-        media: '',
+        media_data: '',
     };
 
     twitterClient.post('media/upload', mediaINIT, (error, mediaINIT, response) => {
         if (!error) {
             mediaAPPEND.media_id = response['headers']['x-mediaid'];
-            console.log(`Successfully uploaded video: ${JSON.stringify(mediaAPPEND.media_ids)}`);
+            console.log(`Successfully uploaded video: ${JSON.stringify(mediaAPPEND.media_id)}`);
         } else {
             console.error(error);
         }
     });
 
-    /*twitterClient.post('media/upload', mediaAPPEND, (error, mediaAPPEND, response) => {
-        if (!error) {
-            console.log(`Successfully uploaded video: ${JSON.stringify(response)}`);
-        } else {
-            console.error(error);
-        }
-    });*/
+    
 
     // Format a provided URL into it's base64 representation
     function getBase64(url) {
@@ -51,9 +45,18 @@ async function tweet(tweetText) {
 
     const processedImage = await getBase64('https://ipfs.io/ipfs/QmcphuTiyoMByJkPWuiMXpiVxojs2YReYbN6jaJdi7KSw3/64000000.mp4');
 
-    console.log(processedImage);
+    //console.log(processedImage);
+    mediaAPPEND.media_data = processedImage;
     
-    
+    twitterClient.post('media/upload', mediaAPPEND, (error, mediaAPPEND, response) => {
+        if (!error) {
+            console.log(`Successfully uploaded video: ${JSON.stringify(response)}`);
+        } else {
+            console.error(error);
+        }
+    });
+
+
     
     const tweet = {
         status: tweetText,
