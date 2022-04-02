@@ -23,7 +23,7 @@ async function tweet(tweetText) {
         command: 'APPEND',
         segment_index: 0,
         media_id: 0,
-        file: '/Users/theogaillard/Downloads/640008461.mp4',
+        media: '/Users/theogaillard/Downloads/640008461.mp4',
     };
 
     twitterClient.post('media/upload', mediaINIT, (error, mediaINIT, response) => {
