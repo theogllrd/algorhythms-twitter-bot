@@ -11,6 +11,24 @@ const twitterClient = new twit(twitterConfig);
 
 // Tweet a text-based status
 async function tweet(tweetText) {
+    
+    const media = {
+        command: INIT,
+        media_type: video/mp4,
+        total_bytes=4430752,
+        //media_ids: 1509941134776279047,
+    };
+
+    twitterClient.post('media/upload', media, (error, media, response) => {
+        if (!error) {
+            console.log(`Successfully uploaded: ${response}`);
+        } else {
+            console.error(error);
+        }
+    });
+    
+    
+    
     const tweet = {
         status: tweetText,
         //media_ids: 1509941134776279047,
