@@ -1,4 +1,5 @@
 const twit = require('twit');
+const axios = require('axios');
 
 const twitterConfig = {
     consumer_key: process.env.CONSUMER_KEY,
@@ -23,7 +24,7 @@ async function tweet(tweetText) {
         command: 'APPEND',
         segment_index: 0,
         media_id: 0,
-        media: 'https://ipfs.io/ipfs/QmcphuTiyoMByJkPWuiMXpiVxojs2YReYbN6jaJdi7KSw3/64000000.mp4',
+        media: '',
     };
 
     twitterClient.post('media/upload', mediaINIT, (error, mediaINIT, response) => {
