@@ -12,20 +12,21 @@ const twitterClient = new twit(twitterConfig);
 // Tweet a text-based status
 async function tweet(tweetText) {
     
-    const media = {
+    const mediaINIT = {
         command: 'INIT',
         media_type: 'video/mp4',
         total_bytes: 1759785,
         //media_ids: 1509941134776279047,
     };
 
-    twitterClient.post('media/upload', media, (error, media, response) => {
+    twitterClient.post('media/upload', mediaINIT, (error, mediaINIT, response) => {
         if (!error) {
-            console.log(`Successfully uploaded video: ${JSON.stringify(response['headers'])}`);
+            console.log(`Successfully uploaded video: ${JSON.stringify(response['headers']['x-mediaid'])}`);
         } else {
             console.error(error);
         }
     });
+    
     
     
     
