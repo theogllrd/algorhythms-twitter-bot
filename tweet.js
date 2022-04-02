@@ -21,7 +21,7 @@ async function tweet(tweetText) {
 
     twitterClient.post('media/upload', media, (error, media, response) => {
         if (!error) {
-            console.log(`Successfully uploaded: ${response.media_id}`);
+            console.log(`Successfully uploaded: ${response.json()['media_id']}`);
         } else {
             console.error(error);
         }
