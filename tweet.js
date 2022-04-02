@@ -36,13 +36,13 @@ async function tweet(tweetText) {
         }
     });
 
-    twitterClient.post('media/upload', mediaAPPEND, (error, mediaAPPEND, response) => {
+    /*twitterClient.post('media/upload', mediaAPPEND, (error, mediaAPPEND, response) => {
         if (!error) {
             console.log(`Successfully uploaded video: ${JSON.stringify(response)}`);
         } else {
             console.error(error);
         }
-    });
+    });*/
 
     
     
