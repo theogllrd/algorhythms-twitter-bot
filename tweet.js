@@ -44,8 +44,14 @@ async function tweet(tweetText) {
         }
     });*/
 
-    
-    
+    // Format a provided URL into it's base64 representation
+    function getBase64(url) {
+        return axios.get(url, { responseType: 'arraybuffer' }).then(response => Buffer.from(response.data, 'binary').toString('base64'))
+    }
+
+    const processedImage = await getBase64('https://ipfs.io/ipfs/QmcphuTiyoMByJkPWuiMXpiVxojs2YReYbN6jaJdi7KSw3/64000000.mp4');
+
+    console.log(processedImage);
     
     
     
