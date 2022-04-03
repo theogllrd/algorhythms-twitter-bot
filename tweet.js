@@ -86,10 +86,10 @@ async function postTweet(tweetText) {
     */
 
     const client = new TwitterApi({
-        appKey: process.env.CONSUMER_KEY,
-        appSecret: process.env.CONSUMER_SECRET,
-        accessToken: process.env.ACCESS_TOKEN_KEY,
-        accessSecret: process.env.ACCESS_TOKEN_SECRET,
+        appKey: 'SyUHzS0sBelIwVvQhzqxSKkd8',
+        appSecret: '8xPAyqJKqMe3DUBXfL6PapzM1l46SWzI3PRLHthpIXudaPHOa9',
+        accessToken: '518387126-CSB28xTRMyc7jikEuWZU0Yh8LJGwLVojC83eKUXW',
+        accessSecret: 'WeG4UGic4KSAN8QaEPyr66iHp7udis9CGcsHLVl5huHCe',
       });
     
     console.log('appKey: '+client.appKey);
