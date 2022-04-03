@@ -99,15 +99,19 @@ async function postTweet(tweetText) {
         //media_ids: mediaAPPEND.media_id,
     };
 
-    const appOnlyClientFromConsumer = await userClient.appLogin();
+    const client = await userClient.appLogin();
     //const v1Client = appOnlyClientFromConsumer.v1; // use V1
-    const rwClient = userClient.readWrite;
+    const rwClient = client.readWrite;
 
-    const verifyCred = userClient.verifyCredentials();
+    //const verifyCred = userClient.verifyCredentials();
+
+
+    
+
 
     // todo
 
-    //await rwClient.tweet('Hello, this is a test.');
+    await rwClient.v1.tweet('Hello, this is a test.');
     
     
     
