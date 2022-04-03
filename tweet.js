@@ -56,20 +56,33 @@ async function tweet(tweetText) {
         }
     });
 
+    const request_data = {
+        'command': 'FINALIZE',
+        'media_id': mediaAPPEND.media_id,
+    };
+
+    twitterClient.post('media/upload', request_data, (error, request_data, response) => {
+        if (!error) {
+            console.log(`Successfully uploaded video: ${JSON.stringify(response)}`);
+        } else {
+            console.error(error);
+        }
+    });
+
 
     
     const tweet = {
         status: tweetText,
-        //media_ids: 1509941134776279047,
+        media_ids: mediaAPPEND.media_id,
     };
 
-    /*twitterClient.post('statuses/update', tweet, (error, tweet, response) => {
+    twitterClient.post('statuses/update', tweet, (error, tweet, response) => {
         if (!error) {
             console.log(`Successfully tweeted: ${tweetText}`);
         } else {
             console.error(error);
         }
-    });*/
+    });
 }
 
 
