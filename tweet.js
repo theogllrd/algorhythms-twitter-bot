@@ -26,7 +26,7 @@ const userClient = new TwitterApi({
 
 
 // Tweet a text-based status
-async function tweet(tweetText) {
+async function postTweet(tweetText) {
 
     // Format a provided URL into it's base64 representation
     

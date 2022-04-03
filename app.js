@@ -8,7 +8,7 @@ const _ = require('lodash');
 const { markets } = require('./markets.js');
 const { currencies } = require('./currencies.js');
 const { transferEventTypes, saleEventTypes } = require('./log_event_types.js');
-const { tweet } = require('./tweet');
+const { postTweet } = require('./tweet');
 const abi = require('./abi.json');
 
 // connect to Alchemy websocket
@@ -118,7 +118,7 @@ async function monitorContract() {
 
       // if more than one asset sold, link directly to etherscan tx, otherwise the marketplace item
       if (tokens.length > 1) {
-        tweet(
+        postTweet(
           `${_.get(
             tokenData,
             'assetName',
@@ -128,7 +128,7 @@ async function monitorContract() {
           } https://etherscan.io/tx/${transactionHash}`
         );
       } else {
-        tweet(
+        postTweet(
           `${_.get(
             tokenData,
             'assetName',
