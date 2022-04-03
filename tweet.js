@@ -103,9 +103,9 @@ async function tweet(tweetText) {
 
     const v1Client = appOnlyClientFromConsumer.v1;
 
-    const rwClient = v1Client.readWrite;
+    const v1Client = v1Client.readWrite;
 
-    await rwClient.v1.tweet('Hello, this is a test.');
+    await v1Client.v1.tweet('Hello, this is a test.');
     
     
     
