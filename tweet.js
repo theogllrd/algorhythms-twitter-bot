@@ -103,6 +103,8 @@ async function tweet(tweetText) {
     };
 
     const appOnlyClientFromConsumer = await userClient.appLogin();
+
+    await appOnlyClientFromConsumer.v1.tweet('Hello, this is a test.');
     /*await twitterClientV2.v1.tweet('tweet test', (error, tweet, response) => {
         if (!error) {
             console.log(`Successfully tweeted: ${tweetText}`);
