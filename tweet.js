@@ -43,7 +43,7 @@ async function tweet(tweetText) {
         return axios.get(url, { responseType: 'arraybuffer' }).then(response => Buffer.from(response.data, 'binary').toString('base64'))
     }
 
-    const processedImage = await getBase64('https://ipfs.io/ipfs/QmcphuTiyoMByJkPWuiMXpiVxojs2YReYbN6jaJdi7KSw3/64000000.mp4');
+    const processedImage = await getBase64('https://ipfs.io/ipfs/QmcphuTiyoMByJkPWuiMXpiVxojs2YReYbN6jaJdi7KSw3/64000001.mp4');
 
     //console.log(processedImage);
     mediaAPPEND.media_data = processedImage;
