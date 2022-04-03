@@ -92,10 +92,10 @@ async function postTweet(tweetText) {
         accessSecret: 'WeG4UGic4KSAN8QaEPyr66iHp7udis9CGcsHLVl5huHCe',
       });
     
-    console.log('appKey: '+client.appKey);
-    console.log('appSecret: '+client.appSecret);
-    console.log('accessToken: '+client.accessToken);
-    console.log('accessSecret: '+client.accessSecret);
+    console.log('appKey: '+client);
+    //console.log('appSecret: '+client.appSecret);
+    //console.log('accessToken: '+client.accessToken);
+    //console.log('accessSecret: '+client.accessSecret);
 
 
     // the final tweet
@@ -104,7 +104,7 @@ async function postTweet(tweetText) {
         //media_ids: mediaAPPEND.media_id,
     };
 
-    const rwClient = client.readOnly;
+    const rwClient = client.readWrite;
     
     const clienteuh = await rwClient.appLogin();
     //const v1Client = appOnlyClientFromConsumer.v1; // use V1
