@@ -104,11 +104,13 @@ async function postTweet(tweetText) {
         //media_ids: mediaAPPEND.media_id,
     };
 
-    const clienteuh = await client.appLogin();
+    const rwClient = client.readOnly;
+    
+    const clienteuh = await rwClient.appLogin();
     //const v1Client = appOnlyClientFromConsumer.v1; // use V1
-    const rwClient = clienteuh.readOnly;
+    
 
-    const verifyCred = rwClient.v1.verifyCredentials();
+    const verifyCred = clienteuh.v1.verifyCredentials();
 
     //console.log(verifyCred);
     
