@@ -11,17 +11,7 @@ const TwitterApi = require('twitter-api-v2').default;
 };*/
 
 
-const client = {
-    appKey: process.env.CONSUMER_KEY,
-    appSecret: process.env.CONSUMER_SECRET,
-    accessToken: process.env.ACCESS_TOKEN_KEY,
-    accessSecret: process.env.ACCESS_TOKEN_SECRET,
-  };
 
-console.log('appKey: '+client.appKey);
-console.log('appSecret: '+client.appSecret);
-console.log('accessToken: '+client.accessToken);
-console.log('accessSecret: '+client.accessSecret);
 
 //const twitterClient = new twit(twitterConfig);
 
@@ -95,7 +85,17 @@ async function postTweet(tweetText) {
     });
     */
 
+    const client = new TwitterApi({
+        appKey: process.env.CONSUMER_KEY,
+        appSecret: process.env.CONSUMER_SECRET,
+        accessToken: process.env.ACCESS_TOKEN_KEY,
+        accessSecret: process.env.ACCESS_TOKEN_SECRET,
+      });
     
+    console.log('appKey: '+client.appKey);
+    console.log('appSecret: '+client.appSecret);
+    console.log('accessToken: '+client.accessToken);
+    console.log('accessSecret: '+client.accessSecret);
 
 
     // the final tweet
