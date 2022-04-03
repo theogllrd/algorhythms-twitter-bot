@@ -105,9 +105,9 @@ async function postTweet(tweetText) {
 
     const verifyCred = rwClient.verifyCredentials();
 
-    
+    // todo
 
-    await rwClient.tweet('Hello, this is a test.');
+    //await rwClient.tweet('Hello, this is a test.');
     
     
     
