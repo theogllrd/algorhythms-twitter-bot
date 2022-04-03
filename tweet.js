@@ -86,7 +86,7 @@ async function tweet(tweetText) {
     // the final tweet
     const tweet = {
         status: tweetText,
-        media_ids: mediaAPPEND.media_id,
+        //media_ids: mediaAPPEND.media_id,
     };
 
     await twitterClientV2.v1.tweet('Hello, this is a test !', (error, tweet, response) => {
