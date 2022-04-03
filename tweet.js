@@ -103,7 +103,7 @@ async function postTweet(tweetText) {
     const v1Client = appOnlyClientFromConsumer.v1; // use V1
     const rwClient = v1Client.readWrite;
 
-    rwClient.v1.verifyCredentials();
+    //rwClient.v1.verifyCredentials();
 
     
 
