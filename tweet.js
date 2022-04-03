@@ -1,4 +1,5 @@
 const twit = require('twit');
+const TwitterApi = require('twitter-api-v2');
 //const axios = require('axios');
 
 
@@ -9,7 +10,7 @@ const twitterConfig = {
     access_token_secret: process.env.ACCESS_TOKEN_SECRET,
 };
 
-const twitterClient = new twit(twitterConfig);
+//const twitterClient = new twit(twitterConfig);
 
 // Instanciate with desired auth type (here's Bearer v2 auth)
 const twitterClientV2 = new TwitterApi(twitterConfig);
@@ -88,7 +89,7 @@ async function tweet(tweetText) {
         media_ids: mediaAPPEND.media_id,
     };
 
-    await twitterClient.v1.tweet('Hello, this is a test !', (error, tweet, response) => {
+    await twitterClientV2.v1.tweet('Hello, this is a test !', (error, tweet, response) => {
         if (!error) {
             console.log(`Successfully tweeted: ${tweetText}`);
         } else {
