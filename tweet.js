@@ -103,15 +103,15 @@ async function postTweet(tweetText) {
     //const v1Client = appOnlyClientFromConsumer.v1; // use V1
     const rwClient = client.readWrite;
 
-    //const verifyCred = userClient.verifyCredentials();
+    const verifyCred = rwClient.v1.verifyCredentials();
 
-
+    console.log(verifyCred);
     
 
 
     // todo
 
-    await rwClient.v1.tweet('Hello, this is a test.');
+    //await rwClient.v1.tweet('Hello, this is a test.');
     
     
     
