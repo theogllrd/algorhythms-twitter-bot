@@ -100,10 +100,10 @@ async function postTweet(tweetText) {
     };
 
     const appOnlyClientFromConsumer = await userClient.appLogin();
-    const v1Client = appOnlyClientFromConsumer.v1; // use V1
-    const rwClient = v1Client.readWrite;
+    //const v1Client = appOnlyClientFromConsumer.v1; // use V1
+    const rwClient = userClient.readWrite;
 
-    const verifyCred = rwClient.verifyCredentials();
+    const verifyCred = userClient.verifyCredentials();
 
     // todo
 
