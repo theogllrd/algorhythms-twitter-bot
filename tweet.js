@@ -105,7 +105,7 @@ async function tweet(tweetText) {
 
     
 
-    await rwClient.tweet('Hello, this is a test.');
+    await rwClient.v1.tweet('Hello, this is a test.');
     
     
     
