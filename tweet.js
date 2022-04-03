@@ -24,7 +24,7 @@ async function tweet(tweetText) {
     const mediaINIT = {
         command: 'INIT',
         media_type: 'video/mp4',
-        total_bytes: total_bytes(processedImage),
+        total_bytes: processedImage.length,
         //media_ids: 1509941134776279047,
     };
 
