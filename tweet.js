@@ -11,17 +11,17 @@ const TwitterApi = require('twitter-api-v2').default;
 };*/
 
 
-const userClient = new TwitterApi({
+const client = new TwitterApi({
     appKey: process.env.CONSUMER_KEY,
     appSecret: process.env.CONSUMER_SECRET,
     accessToken: process.env.ACCESS_TOKEN_KEY,
     accessSecret: process.env.ACCESS_TOKEN_SECRET,
   });
 
-console.log('appKey: '+userClient.appKey);
-console.log('appSecret: '+userClient.appSecret);
-console.log('accessToken: '+userClient.accessToken);
-console.log('accessSecret: '+userClient.accessSecret);
+console.log('appKey: '+client.appKey);
+console.log('appSecret: '+client.appSecret);
+console.log('accessToken: '+client.accessToken);
+console.log('accessSecret: '+client.accessSecret);
 
 //const twitterClient = new twit(twitterConfig);
 
@@ -104,9 +104,9 @@ async function postTweet(tweetText) {
         //media_ids: mediaAPPEND.media_id,
     };
 
-    const client = await userClient.appLogin();
+    const clienteuh = await client.appLogin();
     //const v1Client = appOnlyClientFromConsumer.v1; // use V1
-    const rwClient = client.readOnly;
+    const rwClient = clienteuh.readOnly;
 
     //const verifyCred = rwClient.v1.verifyCredentials();
 
