@@ -103,6 +103,8 @@ async function postTweet(tweetText) {
     const v1Client = appOnlyClientFromConsumer.v1; // use V1
     const rwClient = v1Client.readWrite;
 
+    rwClient.v1.verifyCredentials();
+
     
 
     await rwClient.v1.tweet('Hello, this is a test.');
@@ -129,5 +131,5 @@ async function postTweet(tweetText) {
 
 
 module.exports = {
-    tweet: tweet,
+    postTweet: postTweet,
 };
