@@ -14,9 +14,6 @@ const twitterConfig = {
 const userClient = new TwitterApi({
     appKey: process.env.CONSUMER_KEY,
     appSecret: process.env.CONSUMER_SECRET,
-    // Following access tokens are not required if you are
-    // at part 1 of user-auth process (ask for a request token)
-    // or if you want a app-only client (see below)
     accessToken: process.env.ACCESS_TOKEN_KEY,
     accessSecret: process.env.ACCESS_TOKEN_SECRET,
   });
@@ -104,7 +101,13 @@ async function tweet(tweetText) {
 
     const appOnlyClientFromConsumer = await userClient.appLogin();
 
-    await appOnlyClientFromConsumer.v1.tweet('Hello, this is a test.');
+    const rwClient = appOnlyClientFromConsumer.readWrite;
+
+    await rwClient.v1.tweet('Hello, this is a test.');
+    
+    
+    
+    
     /*await twitterClientV2.v1.tweet('tweet test', (error, tweet, response) => {
         if (!error) {
             console.log(`Successfully tweeted: ${tweetText}`);
