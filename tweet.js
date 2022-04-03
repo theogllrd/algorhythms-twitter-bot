@@ -2,18 +2,26 @@
 const TwitterApi = require('twitter-api-v2').default;
 //const axios = require('axios');
 
-
+/*
 const twitterConfig = {
     consumer_key: process.env.CONSUMER_KEY,
     consumer_secret: process.env.CONSUMER_SECRET,
     access_token: process.env.ACCESS_TOKEN_KEY,
     access_token_secret: process.env.ACCESS_TOKEN_SECRET,
 };
+*/
+
+const userClient = new TwitterApi({
+    appKey: process.env.CONSUMER_KEY,
+    appSecret: process.env.CONSUMER_SECRET,
+    accessToken: process.env.ACCESS_TOKEN_KEY,
+    accessSecret: process.env.ACCESS_TOKEN_SECRET,
+  });
 
 //const twitterClient = new twit(twitterConfig);
 
 // Instanciate with desired auth type (here's Bearer v2 auth)
-const twitterClientV2 = new TwitterApi(twitterConfig.consumer_key);
+const appOnlyClientFromConsumer = await userClient.appLogin();
 
 // Tweet a text-based status
 async function tweet(tweetText) {
@@ -89,7 +97,7 @@ async function tweet(tweetText) {
         //media_ids: mediaAPPEND.media_id,
     };
 
-    await twitterClientV2.v1.tweet('tweet test', (error, tweet, response) => {
+    await appOnlyClientFromConsumer.v1.tweet('tweet test', (error, tweet, response) => {
         if (!error) {
             console.log(`Successfully tweeted: ${tweetText}`);
         } else {
