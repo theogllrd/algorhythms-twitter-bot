@@ -18,6 +18,11 @@ const userClient = new TwitterApi({
     accessSecret: process.env.ACCESS_TOKEN_SECRET,
   });
 
+console.log('appKey'+process.env.CONSUMER_KEY);
+console.log('appSecret'+process.env.CONSUMER_SECRET);
+console.log('accessToken'+process.env.ACCESS_TOKEN_KEY);
+console.log('accessSecret'+process.env.ACCESS_TOKEN_SECRET);
+
 //const twitterClient = new twit(twitterConfig);
 
 // Instanciate with desired auth type (here's Bearer v2 auth)
@@ -103,9 +108,9 @@ async function postTweet(tweetText) {
     //const v1Client = appOnlyClientFromConsumer.v1; // use V1
     const rwClient = client.readOnly;
 
-    const verifyCred = rwClient.v1.verifyCredentials();
+    //const verifyCred = rwClient.v1.verifyCredentials();
 
-    console.log(verifyCred);
+    //console.log(verifyCred);
     
 
 
