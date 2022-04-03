@@ -1,6 +1,6 @@
 const twit = require('twit');
-const axios = require('axios');
-import { TwitterApi } from 'twitter-api-v2';
+//const axios = require('axios');
+
 
 const twitterConfig = {
     consumer_key: process.env.CONSUMER_KEY,
