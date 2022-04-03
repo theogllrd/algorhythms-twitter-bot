@@ -92,7 +92,7 @@ async function postTweet(tweetText) {
         accessSecret: 'WeG4UGic4KSAN8QaEPyr66iHp7udis9CGcsHLVl5huHCe',
       });
     
-    console.log('appKey: '+client);
+    console.log('appKey: '+JSON.stringify(client));
     //console.log('appSecret: '+client.appSecret);
     //console.log('accessToken: '+client.accessToken);
     //console.log('accessSecret: '+client.accessSecret);
@@ -110,7 +110,7 @@ async function postTweet(tweetText) {
     //const v1Client = appOnlyClientFromConsumer.v1; // use V1
     
 
-    const verifyCred = clienteuh.v1.verifyCredentials();
+    //const verifyCred = clienteuh.v1.verifyCredentials();
 
     //console.log(verifyCred);
     
