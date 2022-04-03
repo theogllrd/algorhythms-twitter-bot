@@ -13,7 +13,7 @@ const twitterConfig = {
 //const twitterClient = new twit(twitterConfig);
 
 // Instanciate with desired auth type (here's Bearer v2 auth)
-const twitterClientV2 = new TwitterApi(twitterConfig.access_token);
+const twitterClientV2 = new TwitterApi(twitterConfig.access_token_secret);
 
 // Tweet a text-based status
 async function tweet(tweetText) {
