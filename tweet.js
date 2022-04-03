@@ -1,5 +1,5 @@
-const twit = require('twit');
-const TwitterApi = require('twitter-api-v2');
+//const twit = require('twit');
+const TwitterApi = require('twitter-api-v2').default;
 //const axios = require('axios');
 
 
