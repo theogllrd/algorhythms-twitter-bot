@@ -10,10 +10,23 @@ const twitterConfig = {
     access_token_secret: process.env.ACCESS_TOKEN_SECRET,
 };
 
+
+const userClient = new TwitterApi({
+    appKey: process.env.CONSUMER_KEY,
+    appSecret: process.env.CONSUMER_SECRET,
+    // Following access tokens are not required if you are
+    // at part 1 of user-auth process (ask for a request token)
+    // or if you want a app-only client (see below)
+    accessToken: process.env.ACCESS_TOKEN_KEY,
+    accessSecret: process.env.ACCESS_TOKEN_SECRET,
+  });
+
 //const twitterClient = new twit(twitterConfig);
 
 // Instanciate with desired auth type (here's Bearer v2 auth)
-const twitterClientV2 = new TwitterApi(twitterConfig.consumer_secret);
+//const twitterClientV2 = new TwitterApi(twitterConfig.consumer_secret);
+
+const appOnlyClientFromConsumer = await userClient.appLogin();
 
 // Tweet a text-based status
 async function tweet(tweetText) {
@@ -89,13 +102,13 @@ async function tweet(tweetText) {
         //media_ids: mediaAPPEND.media_id,
     };
 
-    await twitterClientV2.v1.tweet('tweet test', (error, tweet, response) => {
+    /*await twitterClientV2.v1.tweet('tweet test', (error, tweet, response) => {
         if (!error) {
             console.log(`Successfully tweeted: ${tweetText}`);
         } else {
             console.error(error);
         }
-    });
+    });*/
 
     /*twitterClient.post('statuses/update', tweet, (error, tweet, response) => {
         if (!error) {
