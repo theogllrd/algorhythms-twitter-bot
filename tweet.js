@@ -18,10 +18,10 @@ const userClient = new TwitterApi({
     accessSecret: process.env.ACCESS_TOKEN_SECRET,
   });
 
-console.log('appKey'+process.env.CONSUMER_KEY);
-console.log('appSecret'+process.env.CONSUMER_SECRET);
-console.log('accessToken'+process.env.ACCESS_TOKEN_KEY);
-console.log('accessSecret'+process.env.ACCESS_TOKEN_SECRET);
+console.log('appKey: '+userClient.appKey);
+console.log('appSecret: '+userClient.appSecret);
+console.log('accessToken: '+userClient.accessToken);
+console.log('accessSecret: '+userClient.accessSecret);
 
 //const twitterClient = new twit(twitterConfig);
 
