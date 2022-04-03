@@ -3,12 +3,12 @@ const TwitterApi = require('twitter-api-v2').default;
 //const axios = require('axios');
 
 
-const twitterConfig = {
+/*const twitterConfig = {
     consumer_key: process.env.CONSUMER_KEY,
     consumer_secret: process.env.CONSUMER_SECRET,
     access_token: process.env.ACCESS_TOKEN_KEY,
     access_token_secret: process.env.ACCESS_TOKEN_SECRET,
-};
+};*/
 
 
 const userClient = new TwitterApi({
@@ -101,7 +101,7 @@ async function postTweet(tweetText) {
 
     const client = await userClient.appLogin();
     //const v1Client = appOnlyClientFromConsumer.v1; // use V1
-    const rwClient = client.readWrite;
+    const rwClient = client.readOnly;
 
     const verifyCred = rwClient.v1.verifyCredentials();
 
