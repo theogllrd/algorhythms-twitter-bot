@@ -13,7 +13,7 @@ const twitterConfig = {
 //const twitterClient = new twit(twitterConfig);
 
 // Instanciate with desired auth type (here's Bearer v2 auth)
-const twitterClientV2 = new TwitterApi(twitterConfig);
+const twitterClientV2 = new TwitterApi(twitterConfig.access_token);
 
 // Tweet a text-based status
 async function tweet(tweetText) {
@@ -89,7 +89,7 @@ async function tweet(tweetText) {
         //media_ids: mediaAPPEND.media_id,
     };
 
-    await twitterClientV2.v1.tweet('Hello, this is a test !', (error, tweet, response) => {
+    await twitterClientV2.v1.tweet('tweet test', (error, tweet, response) => {
         if (!error) {
             console.log(`Successfully tweeted: ${tweetText}`);
         } else {
