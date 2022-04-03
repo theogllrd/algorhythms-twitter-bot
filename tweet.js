@@ -11,12 +11,12 @@ const TwitterApi = require('twitter-api-v2').default;
 };*/
 
 
-const client = new TwitterApi({
+const client = {
     appKey: process.env.CONSUMER_KEY,
     appSecret: process.env.CONSUMER_SECRET,
     accessToken: process.env.ACCESS_TOKEN_KEY,
     accessSecret: process.env.ACCESS_TOKEN_SECRET,
-  });
+  };
 
 console.log('appKey: '+client.appKey);
 console.log('appSecret: '+client.appSecret);
