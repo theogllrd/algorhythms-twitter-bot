@@ -3,7 +3,7 @@ const twit = require('twit');
 const axios = require('axios');
 //const IPFS = require('ipfs-core').default;
 //import * as IPFS from 'ipfs-core';
-
+require('dotenv').config();
 
 const twitterConfig = {
     consumer_key: process.env.CONSUMER_KEY,
