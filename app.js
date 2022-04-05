@@ -25,7 +25,7 @@ async function monitorContract() {
   const contract = new web3.eth.Contract(abi, process.env.CONTRACT_ADDRESS);
 
   contract.events
-    .Transfer({fromBlock:14480381})
+    .Transfer()
     .on('connected', (subscriptionId) => {
       console.log(subscriptionId);
     })
@@ -122,16 +122,13 @@ async function monitorContract() {
           )} & other assets has changed hands https://etherscan.io/tx/${transactionHash}`
         );
       } else {
+        console.log(`Trying to tweet new sale for token #${tokens[0]-64000000}`);
         await getFile(
           `https://ipfs.io/ipfs/QmcphuTiyoMByJkPWuiMXpiVxojs2YReYbN6jaJdi7KSw3/${tokens[0]}.mp4`,
           `./mp4/${tokens[0]}.mp4`
         );
         await postTweet(
-          `${_.get(
-            tokenData,
-            'assetName',
-            `#` + tokens[0]
-          )} has changed hands ${market.site}${process.env.CONTRACT_ADDRESS}/${tokens[0]}`,
+          `Algo[Rhythm] #${tokens[0]-64000000} has changed hands ${market.site}${process.env.CONTRACT_ADDRESS}/${tokens[0]} 🎵`,
           `${__dirname}/mp4/${tokens[0]}.mp4`
         );
       }
