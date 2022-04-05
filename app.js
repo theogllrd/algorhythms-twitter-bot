@@ -8,7 +8,7 @@ const _ = require('lodash');
 const { markets } = require('./markets.js');
 const { currencies } = require('./currencies.js');
 const { transferEventTypes, saleEventTypes } = require('./log_event_types.js');
-const { postTweet } = require('./tweet');
+const { postTweet, getFile } = require('./tweet');
 const abi = require('./abi.json');
 
 // connect to Alchemy websocket
@@ -139,6 +139,10 @@ async function monitorContract() {
           } https://etherscan.io/tx/${transactionHash}`
         );
       } else if (tokens.length ==! 0){
+        await getFile(
+          `https://ipfs.io/ipfs/QmcphuTiyoMByJkPWuiMXpiVxojs2YReYbN6jaJdi7KSw3/${tokens[0]}.mp4`,
+          tokens[0]
+        );
         postTweet(
           `${_.get(
             tokenData,
