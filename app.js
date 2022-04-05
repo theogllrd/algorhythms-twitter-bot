@@ -16,14 +16,14 @@ const web3 = createAlchemyWeb3(
   `wss://eth-mainnet.alchemyapi.io/v2/${process.env.ALCHEMY_API_KEY}`
 );
 
-// sometimes web3.js can return duplicate transactions in a split second, so
+// sometimes web3.js can return duplicate transactions in a split second, so we create a var that hold the lastKnownTransactionHash
 let lastTransactionHash;
 
 async function monitorContract() {
   const contract = new web3.eth.Contract(abi, process.env.CONTRACT_ADDRESS);
 
   contract.events
-    .Transfer({fromBlock:14480382})
+    .Transfer({fromBlock:14525093})
     .on('connected', (subscriptionId) => {
       console.log(subscriptionId);
     })
@@ -57,7 +57,6 @@ async function monitorContract() {
 
       const recipient = receipt.to.toLowerCase();
 
-
       // not a marketplace transaction transfer, skip
       if (!(recipient in markets)) {
         return;
@@ -90,8 +89,7 @@ async function monitorContract() {
         if (log.data == '0x' && transferEventTypes.includes(log.topics[0])) {
           const tokenId = web3.utils.hexToNumberString(log.topics[3]);
           
-          if(tokenId.startsWith('64')) {
-            console.log('TRANSACTION HASH:'+ transactionHash);
+          if(tokenId.startsWith('64000')) {
             tokens.push(tokenId);
           }
         }
@@ -138,7 +136,7 @@ async function monitorContract() {
             market.name
           } https://etherscan.io/tx/${transactionHash}`
         );
-      } else if (tokens.length ==! 0){
+      } else {
         await getFile(
           `https://ipfs.io/ipfs/QmcphuTiyoMByJkPWuiMXpiVxojs2YReYbN6jaJdi7KSw3/${tokens[0]}.mp4`,
           `./mp4/${tokens[0]}.mp4`
@@ -148,7 +146,7 @@ async function monitorContract() {
             tokenData,
             'assetName',
             `#` + tokens[0]
-          )} bought for ${totalPrice} ${currency.name} on ${market.name} https://ipfs.io/ipfs/QmcphuTiyoMByJkPWuiMXpiVxojs2YReYbN6jaJdi7KSw3/${tokens[0]}.mp4`,
+          )} bought for ${totalPrice} ${currency.name} on ${market.name} by https://etherscan.io/address/${_.get(tokenData,'fromAccoundAddress',)}`,
           `${__dirname}/mp4/${tokens[0]}.mp4`
         );
       }
@@ -174,12 +172,23 @@ async function getTokenData(tokenId) {
         },
       }
     );
+    //const to = response.data.last_sale.transaction.from_account.address;
+    //console.log('to: '+to);
 
+    //const from = response.data.owner.address;
+    //console.log('from: '+from);
+
+    //console.log(response.data.last_sale.transaction.from_account);
+    //console.log('-------------------');
+    //console.log(response.data.last_sale.transaction.to_account);
     const data = response.data;
+
+    //console.log(data);
 
     // just the asset name for now, but retrieve whatever you need
     return {
       assetName: _.get(data, 'name'),
+      fromAccoundAddress: _.get(data, 'last_sale.transaction.from_account.address'),
     };
   } catch (error) {
     if (error.response) {
