@@ -4,6 +4,7 @@ const axios = require('axios');
 const { ethers } = require('ethers');
 const retry = require('async-retry');
 const _ = require('lodash');
+
 // local
 const { markets } = require('./markets.js');
 const { currencies } = require('./currencies.js');
@@ -16,10 +17,11 @@ const web3 = createAlchemyWeb3(
   `wss://eth-mainnet.alchemyapi.io/v2/${process.env.ALCHEMY_API_KEY}`
 );
 
-// sometimes web3.js can return duplicate transactions in a split second, so we create a var that hold the lastKnownTransactionHash
+// sometimes web3.js can return duplicate transactions in a split second, so we create a var that hold the last known transaction hash
 let lastTransactionHash;
 
 async function monitorContract() {
+
   const contract = new web3.eth.Contract(abi, process.env.CONTRACT_ADDRESS);
 
   contract.events
@@ -29,8 +31,7 @@ async function monitorContract() {
     })
     .on('data', async (data) => {
       const transactionHash = data.transactionHash.toLowerCase();
-      //const transactionHash = "0xbaaf43daf184650016ad75539bf2a77c0159865d1b4c7a217c4b40bea66a433e"; // for testing
-
+      
       // duplicate transaction - skip process
       if (transactionHash == lastTransactionHash) {
         return;
@@ -42,12 +43,9 @@ async function monitorContract() {
       const receipt = await retry(
         async (bail) => {
           const rec = await web3.eth.getTransactionReceipt(transactionHash);
-          
-          //console.log(rec);
           if (rec == null) {
             throw new Error('receipt not found, try again');
           }
-
           return rec;
         },
         {
@@ -62,8 +60,6 @@ async function monitorContract() {
         return;
       }
 
-    
-
       // retrieve market details
       const market = _.get(markets, recipient);
 
@@ -75,11 +71,8 @@ async function monitorContract() {
       };
       let tokens = [];
       let totalPrice;
-      //let toAddress;
-      //let fromAddress;
 
       for (let log of receipt.logs) {
-        
         const logAddress = log.address.toLowerCase();
 
         // if non-ETH transaction
@@ -116,13 +109,6 @@ async function monitorContract() {
       // remove any dupes
       tokens = _.uniq(tokens);
 
-      // custom - don't post sales below a currencies manually set threshold
-      // if (Number(totalPrice) < currency.threshold) {
-      //     console.log(`Sale under ${currency.threshold}: Token ID: ${tokens[0]}, Price: ${totalPrice}`);
-
-      //     return;
-      // }
-
       // retrieve metadata for the first (or only) ERC21 asset sold
       const tokenData = await getTokenData(tokens[0]);
 
@@ -133,16 +119,13 @@ async function monitorContract() {
             tokenData,
             'assetName',
             `#` + tokens[0]
-          )} & other assets bought for ${totalPrice} ${currency.name} on ${
-            market.name
-          } https://etherscan.io/tx/${transactionHash}`
+          )} & other assets has changed hands https://etherscan.io/tx/${transactionHash}`
         );
       } else {
         await getFile(
           `https://ipfs.io/ipfs/QmcphuTiyoMByJkPWuiMXpiVxojs2YReYbN6jaJdi7KSw3/${tokens[0]}.mp4`,
           `./mp4/${tokens[0]}.mp4`
         );
-
         await postTweet(
           `${_.get(
             tokenData,
