@@ -23,7 +23,7 @@ async function monitorContract() {
   const contract = new web3.eth.Contract(abi, process.env.CONTRACT_ADDRESS);
 
   contract.events
-    .Transfer({fromBlock:14525093})
+    .Transfer({fromBlock:14480381})
     .on('connected', (subscriptionId) => {
       console.log(subscriptionId);
     })
