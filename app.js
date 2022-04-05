@@ -23,7 +23,7 @@ async function monitorContract() {
   const contract = new web3.eth.Contract(abi, process.env.CONTRACT_ADDRESS);
 
   contract.events
-    .Transfer({fromBlock:14480380})
+    .Transfer({fromBlock:14480382})
     .on('connected', (subscriptionId) => {
       console.log(subscriptionId);
     })
@@ -141,14 +141,15 @@ async function monitorContract() {
       } else if (tokens.length ==! 0){
         await getFile(
           `https://ipfs.io/ipfs/QmcphuTiyoMByJkPWuiMXpiVxojs2YReYbN6jaJdi7KSw3/${tokens[0]}.mp4`,
-          tokens[0]
+          `./mp4/${tokens[0]}.mp4`
         );
-        postTweet(
+        await postTweet(
           `${_.get(
             tokenData,
             'assetName',
             `#` + tokens[0]
-          )} bought for ${totalPrice} ${currency.name} on ${market.name} https://ipfs.io/ipfs/QmcphuTiyoMByJkPWuiMXpiVxojs2YReYbN6jaJdi7KSw3/${tokens[0]}.mp4`
+          )} bought for ${totalPrice} ${currency.name} on ${market.name} https://ipfs.io/ipfs/QmcphuTiyoMByJkPWuiMXpiVxojs2YReYbN6jaJdi7KSw3/${tokens[0]}.mp4`,
+          `${__dirname}/mp4/${tokens[0]}.mp4`
         );
       }
     })

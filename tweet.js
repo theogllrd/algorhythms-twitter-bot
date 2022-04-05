@@ -10,15 +10,15 @@ const twitterConfig = {
     access_token_secret: process.env.ACCESS_TOKEN_SECRET,
 };
 
-async function getFile(url, tokenId){
+async function getFile(url, path){
     return new Promise((resolve, reject) => {
         axios({
             method: "get",
             url: url,
             responseType: "stream"
         }).then((response) => {
-            response.data.pipe(fs.createWriteStream(`./mp4/${tokenId}.mp4`));
-            resolve()
+            response.data.on('end', resolve);
+            response.data.pipe(fs.createWriteStream(path));
         }).catch((err) => {
             console.log(err);
             reject();
@@ -28,16 +28,22 @@ async function getFile(url, tokenId){
 }
 
 // Tweet a text-based status
-async function postTweet(tweetText) {
+async function postTweet(tweetText, tweetMedia) {
 
     const userClient = new TwitterApi({
         appKey: process.env.CONSUMER_KEY,
         appSecret: process.env.CONSUMER_SECRET,
         accessToken: process.env.ACCESS_TOKEN_KEY,
         accessSecret: process.env.ACCESS_TOKEN_SECRET,
-      });
+    });
 
-    // userClient.v1.uploadMedia()
+    const media_id = await userClient.v1.uploadMedia(tweetMedia);
+
+    await userClient.v1.tweet(tweetText, {
+        media_ids: [media_id]
+    });
+
+    console.log("uploaded")
 
 }
 
