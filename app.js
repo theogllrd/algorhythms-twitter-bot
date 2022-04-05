@@ -75,9 +75,11 @@ async function monitorContract() {
       };
       let tokens = [];
       let totalPrice;
+      //let toAddress;
+      //let fromAddress;
 
       for (let log of receipt.logs) {
-
+        
         const logAddress = log.address.toLowerCase();
 
         // if non-ETH transaction
@@ -88,7 +90,6 @@ async function monitorContract() {
         // token(s) part of the transaction
         if (log.data == '0x' && transferEventTypes.includes(log.topics[0])) {
           const tokenId = web3.utils.hexToNumberString(log.topics[3]);
-          
           if(tokenId.startsWith('64000')) {
             tokens.push(tokenId);
           }
@@ -141,12 +142,13 @@ async function monitorContract() {
           `https://ipfs.io/ipfs/QmcphuTiyoMByJkPWuiMXpiVxojs2YReYbN6jaJdi7KSw3/${tokens[0]}.mp4`,
           `./mp4/${tokens[0]}.mp4`
         );
+
         await postTweet(
           `${_.get(
             tokenData,
             'assetName',
             `#` + tokens[0]
-          )} bought for ${totalPrice} ${currency.name} on ${market.name} by https://etherscan.io/address/${_.get(tokenData,'fromAccoundAddress',)}`,
+          )} has changed hands ${market.site}${process.env.CONTRACT_ADDRESS}/${tokens[0]}`,
           `${__dirname}/mp4/${tokens[0]}.mp4`
         );
       }
@@ -172,23 +174,12 @@ async function getTokenData(tokenId) {
         },
       }
     );
-    //const to = response.data.last_sale.transaction.from_account.address;
-    //console.log('to: '+to);
 
-    //const from = response.data.owner.address;
-    //console.log('from: '+from);
-
-    //console.log(response.data.last_sale.transaction.from_account);
-    //console.log('-------------------');
-    //console.log(response.data.last_sale.transaction.to_account);
     const data = response.data;
-
-    //console.log(data);
 
     // just the asset name for now, but retrieve whatever you need
     return {
       assetName: _.get(data, 'name'),
-      fromAccoundAddress: _.get(data, 'last_sale.transaction.from_account.address'),
     };
   } catch (error) {
     if (error.response) {
