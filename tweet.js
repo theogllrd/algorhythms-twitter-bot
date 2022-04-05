@@ -1,19 +1,18 @@
-//const twit = require('twit');
-const TwitterApi = require('twitter-api-v2').default;
-//const axios = require('axios');
+const twit = require('twit');
+//const TwitterApi = require('twitter-api-v2').default;
+const axios = require('axios');
+//const IPFS = require('ipfs-core').default;
+//import * as IPFS from 'ipfs-core';
 
 
-/*const twitterConfig = {
+const twitterConfig = {
     consumer_key: process.env.CONSUMER_KEY,
     consumer_secret: process.env.CONSUMER_SECRET,
     access_token: process.env.ACCESS_TOKEN_KEY,
     access_token_secret: process.env.ACCESS_TOKEN_SECRET,
-};*/
+};
 
-
-
-
-//const twitterClient = new twit(twitterConfig);
+const twitterClient = new twit(twitterConfig);
 
 // Instanciate with desired auth type (here's Bearer v2 auth)
 //const twitterClientV2 = new TwitterApi(twitterConfig.consumer_secret);
@@ -23,24 +22,20 @@ const TwitterApi = require('twitter-api-v2').default;
 // Tweet a text-based status
 async function postTweet(tweetText) {
 
-    // Format a provided URL into it's base64 representation
+
+
     
+
     /*
-    function getBase64(url) {
-        return axios.get(url, { responseType: 'arraybuffer' }).then(response => Buffer.from(response.data, 'binary').toString('base64'))
-    }
-
-    const processedImage = await getBase64('https://ipfs.io/ipfs/QmcphuTiyoMByJkPWuiMXpiVxojs2YReYbN6jaJdi7KSw3/64000001.mp4');
-
-    
-    const mediaINIT = {
+    // CHUNKS VERSION
+    const init_data = {
         command: 'INIT',
         media_type: 'video/mp4',
-        total_bytes: 11947817,
+        total_bytes: processedImage.length,
         //media_ids: 1509941134776279047,
     };
 
-    let mediaAPPEND = {
+    let append_data = {
         command: 'APPEND',
         segment_index: 0,
         media_id: 0,
@@ -48,24 +43,21 @@ async function postTweet(tweetText) {
     };
 
     // init the media upload
-    twitterClient.post('media/upload', mediaINIT, (error, mediaINIT, response) => {
+    twitterClient.post('media/upload', init_data, (error, init_data, response) => {
         if (!error) {
-            mediaAPPEND.media_id = response['headers']['x-mediaid'];
-            console.log(`Successfully uploaded video: ${JSON.stringify(mediaAPPEND.media_id)}`);
+            append_data.media_id = response['headers']['x-mediaid'];
+            console.log(`Successfully init video: ${JSON.stringify(response)}`);
         } else {
             console.error(error);
         }
     });
 
-    
-
-    
-    mediaAPPEND.media_data = processedImage;
+    //append_data.media_data = processedImage;
     
     // upload chunks of the media
-    twitterClient.post('media/upload', mediaAPPEND, (error, mediaAPPEND, response) => {
+    twitterClient.post('media/upload', append_data, (error, append_data, response) => {
         if (!error) {
-            console.log(`Successfully uploaded video: ${JSON.stringify(response)}`);
+            console.log(`Successfully append video: ${JSON.stringify(response)}`);
         } else {
             console.error(error);
         }
@@ -73,18 +65,19 @@ async function postTweet(tweetText) {
 
     const request_data = {
         'command': 'FINALIZE',
-        'media_id': mediaAPPEND.media_id,
+        'media_id': append_data.media_id,
     };
 
     twitterClient.post('media/upload', request_data, (error, request_data, response) => {
         if (!error) {
-            console.log(`Successfully uploaded video: ${JSON.stringify(response)}`);
+            console.log(`/!\\ Successfully finalize video: ${JSON.stringify(response)}`);
         } else {
             console.error(error);
         }
     });
-    */
-
+    
+    /*
+    // VERSION AVEC LA LIB twitter-api-v2
     const client = new TwitterApi({
         appKey: 'SyUHzS0sBelIwVvQhzqxSKkd8',
         appSecret: '8xPAyqJKqMe3DUBXfL6PapzM1l46SWzI3PRLHthpIXudaPHOa9',
@@ -93,51 +86,39 @@ async function postTweet(tweetText) {
       });
     
     console.log('appKey: '+JSON.stringify(client));
-    //console.log('appSecret: '+client.appSecret);
-    //console.log('accessToken: '+client.accessToken);
-    //console.log('accessSecret: '+client.accessSecret);
+    
+    const clienteuh = await client.appLogin();
+    const rwClient = clienteuh.readWrite;
+    const verifyCred = rwClient.v1.verifyCredentials();
+    console.log(verifyCred);
+    //await rwClient.v1.tweet('Hello, this is a test.');
+    */
 
-
+    
     // the final tweet
     const tweet = {
         status: tweetText,
-        //media_ids: mediaAPPEND.media_id,
+        //media_ids: append_data.media_id, // add this line whis the media_id to tweet it
     };
 
-    
-    
-    const clienteuh = await client.appLogin();
-    //const v1Client = appOnlyClientFromConsumer.v1; // use V1
-    
-    const rwClient = clienteuh.readWrite;
-    const verifyCred = rwClient.v1.verifyCredentials();
 
-    //console.log(verifyCred);
+    
     
 
 
-    // todo
 
-    //await rwClient.v1.tweet('Hello, this is a test.');
     
     
+    //console.log(`Successfully tweeted: ${tweetText}`); // pour éviter de spamm 500 tweets sur mon twitter perso
     
-    
-    /*await twitterClientV2.v1.tweet('tweet test', (error, tweet, response) => {
+    // FINAL TWEET, fonctionnel
+    twitterClient.post('statuses/update', tweet, (error, tweet, response) => {
         if (!error) {
             console.log(`Successfully tweeted: ${tweetText}`);
         } else {
             console.error(error);
         }
-    });*/
-
-    /*twitterClient.post('statuses/update', tweet, (error, tweet, response) => {
-        if (!error) {
-            console.log(`Successfully tweeted: ${tweetText}`);
-        } else {
-            console.error(error);
-        }
-    });*/
+    });
 }
 
 

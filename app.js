@@ -23,13 +23,13 @@ async function monitorContract() {
   const contract = new web3.eth.Contract(abi, process.env.CONTRACT_ADDRESS);
 
   contract.events
-    .Transfer({fromBlock:14480381})
+    .Transfer({fromBlock:14480380})
     .on('connected', (subscriptionId) => {
       console.log(subscriptionId);
     })
     .on('data', async (data) => {
-      //const transactionHash = data.transactionHash.toLowerCase();
-      const transactionHash = "0xbaaf43daf184650016ad75539bf2a77c0159865d1b4c7a217c4b40bea66a433e"; // for testing
+      const transactionHash = data.transactionHash.toLowerCase();
+      //const transactionHash = "0xbaaf43daf184650016ad75539bf2a77c0159865d1b4c7a217c4b40bea66a433e"; // for testing
 
       // duplicate transaction - skip process
       if (transactionHash == lastTransactionHash) {
@@ -42,7 +42,8 @@ async function monitorContract() {
       const receipt = await retry(
         async (bail) => {
           const rec = await web3.eth.getTransactionReceipt(transactionHash);
-
+          
+          //console.log(rec);
           if (rec == null) {
             throw new Error('receipt not found, try again');
           }
@@ -56,10 +57,13 @@ async function monitorContract() {
 
       const recipient = receipt.to.toLowerCase();
 
+
       // not a marketplace transaction transfer, skip
       if (!(recipient in markets)) {
         return;
       }
+
+    
 
       // retrieve market details
       const market = _.get(markets, recipient);
@@ -74,6 +78,7 @@ async function monitorContract() {
       let totalPrice;
 
       for (let log of receipt.logs) {
+
         const logAddress = log.address.toLowerCase();
 
         // if non-ETH transaction
@@ -84,8 +89,11 @@ async function monitorContract() {
         // token(s) part of the transaction
         if (log.data == '0x' && transferEventTypes.includes(log.topics[0])) {
           const tokenId = web3.utils.hexToNumberString(log.topics[3]);
-
-          tokens.push(tokenId);
+          
+          if(tokenId.startsWith('64')) {
+            console.log('TRANSACTION HASH:'+ transactionHash);
+            tokens.push(tokenId);
+          }
         }
 
         // transaction log - decode log in correct format depending on market & retrieve price
@@ -103,6 +111,9 @@ async function monitorContract() {
         }
       }
 
+      if(!(tokens.length > 0)) {
+        return;
+      }
       // remove any dupes
       tokens = _.uniq(tokens);
 
@@ -127,7 +138,7 @@ async function monitorContract() {
             market.name
           } https://etherscan.io/tx/${transactionHash}`
         );
-      } else {
+      } else if (tokens.length ==! 0){
         postTweet(
           `${_.get(
             tokenData,
