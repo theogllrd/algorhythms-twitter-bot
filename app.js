@@ -83,7 +83,7 @@ async function monitorContract() {
         // token(s) part of the transaction
         if (log.data == '0x' && transferEventTypes.includes(log.topics[0])) {
           const tokenId = web3.utils.hexToNumberString(log.topics[3]);
-          if(tokenId.startsWith('289')) {
+          if(tokenId.startsWith('2890')) {
             tokens.push(tokenId);
           }
         }
@@ -122,13 +122,13 @@ async function monitorContract() {
           )} & other assets has changed hands https://etherscan.io/tx/${transactionHash}`
         );
       } else {
-        console.log(`Trying to tweet new sale for token #${tokens[0]-289000000}`);
+        console.log(`Trying to tweet new sale for token #${tokens[0]-28900000}`);
         await getFile(
           `https://ipfs.io/ipfs/QmcphuTiyoMByJkPWuiMXpiVxojs2YReYbN6jaJdi7KSw3/${tokens[0]}.mp4`,
           `./mp4/${tokens[0]}.mp4`
         );
         await postTweet(
-          `Algo[Beats] #${tokens[0]-289000000} has changed hands ${market.site}${process.env.CONTRACT_ADDRESS}/${tokens[0]} 🎵`,
+          `Algo[Beats] #${tokens[0]-28900000} has changed hands ${market.site}${process.env.CONTRACT_ADDRESS}/${tokens[0]} 🎵`,
           `${__dirname}/mp4/${tokens[0]}.mp4`
         );
       }
