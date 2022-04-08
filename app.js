@@ -122,15 +122,20 @@ async function monitorContract() {
           )} & other assets has changed hands https://etherscan.io/tx/${transactionHash}`
         );
       } else {
-        console.log(`Trying to tweet new sale for token #${tokens[0]-28900000}`);
-        await getFile(
-          `https://ipfs.io/ipfs/QmcphuTiyoMByJkPWuiMXpiVxojs2YReYbN6jaJdi7KSw3/${tokens[0]}.mp4`,
+        console.log(`Trying to tweet new sale for token #${tokens[0]-289000000}`);
+
+        try {
+          await getFile(
+          `https://ipfs.io/ipfs/QmTAnSRKEiZ2Ef2NmSX4oeKnHYKX2KK9jcYyJngWH7LvRt/${tokens[0]}.mp4`,
           `./mp4/${tokens[0]}.mp4`
-        );
-        await postTweet(
-          `Algo[Beats] #${tokens[0]-28900000} has changed hands ${market.site}${process.env.CONTRACT_ADDRESS}/${tokens[0]} 🎵`,
-          `${__dirname}/mp4/${tokens[0]}.mp4`
-        );
+          );
+          await postTweet(
+            `Algo(Beat) #${tokens[0]-289000000} has changed hands ${market.site}${process.env.CONTRACT_ADDRESS}/${tokens[0]} 🎵`,
+            `${__dirname}/mp4/${tokens[0]}.mp4`
+          );
+        } catch(error) {
+          console.log(error);
+        }
       }
     })
     .on('changed', (event) => {

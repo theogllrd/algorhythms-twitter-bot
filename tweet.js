@@ -9,7 +9,8 @@ async function getFile(url, path){
         axios({
             method: "get",
             url: url,
-            responseType: "stream"
+            responseType: "stream",
+            timeout: 300000
         }).then((response) => {
             response.data.on('end', resolve);
             response.data.pipe(fs.createWriteStream(path));
