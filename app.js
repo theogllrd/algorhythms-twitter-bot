@@ -124,11 +124,29 @@ async function monitorContract() {
       } else {
         console.log(`Trying to tweet new sale for token #${tokens[0]-289000000}`);
 
+        const gateways = [
+          'dweb.link',
+          'ipfs.io',
+          'gateway.ipfs.io',
+          'ipfs.eternum.io'
+        ];
+
+        for (let i=0; i < gateways.length; i++) {
+          try {
+            console.log('trying to download file with gateway: '+gateways[i]);
+            let uploaded = await getFile(
+              `https://${gateways[i]}/ipfs/QmTAnSRKEiZ2Ef2NmSX4oeKnHYKX2KK9jcYyJngWH7LvRt/${tokens[0]}.mp4`,
+              `./mp4/${tokens[0]}.mp4`
+            );
+            if(uploaded) {
+              break;
+            }
+          } catch (error) {
+            console.log(error);
+          }
+        }
+
         try {
-          await getFile(
-          `https://ipfs.io/ipfs/QmTAnSRKEiZ2Ef2NmSX4oeKnHYKX2KK9jcYyJngWH7LvRt/${tokens[0]}.mp4`,
-          `./mp4/${tokens[0]}.mp4`
-          );
           await postTweet(
             `Algo(Beat) #${tokens[0]-289000000} has changed hands ${market.site}${process.env.CONTRACT_ADDRESS}/${tokens[0]} 🎵`,
             `${__dirname}/mp4/${tokens[0]}.mp4`
