@@ -128,19 +128,17 @@ async function monitorContract() {
           'dweb.link',
           'ipfs.io',
           'gateway.ipfs.io',
-          'ipfs.eternum.io'
+          'cf-ipfs.com'
         ];
 
         for (let i=0; i < gateways.length; i++) {
           try {
             console.log('trying to download file with gateway: '+gateways[i]);
-            let uploaded = await getFile(
+            await getFile(
               `https://${gateways[i]}/ipfs/QmTAnSRKEiZ2Ef2NmSX4oeKnHYKX2KK9jcYyJngWH7LvRt/${tokens[0]}.mp4`,
               `./mp4/${tokens[0]}.mp4`
             );
-            if(uploaded) {
-              break;
-            }
+            break;
           } catch (error) {
             console.log(error);
           }
