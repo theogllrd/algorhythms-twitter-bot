@@ -4,13 +4,13 @@ const fs = require('fs');
 require('dotenv').config();
 
 // download nft from ipfs
-async function getFile(url, path){
+async function getFile(url, path) {
     return new Promise((resolve, reject) => {
         axios({
             method: "get",
             url: url,
-            responseType: "stream",
-            timeout: 300000
+            responseType: "stream"
+            //timeout: 300000
         }).then((response) => {
             response.data.on('end', resolve);
             response.data.pipe(fs.createWriteStream(path));
@@ -18,7 +18,7 @@ async function getFile(url, path){
             console.log(err);
             reject();
         });
-    })
+    });
 }
 
 // Tweet a text-based status
