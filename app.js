@@ -150,6 +150,7 @@ async function monitorContract() {
             `${__dirname}/mp4/${tokens[0]}.mp4`
           );
         } catch(error) {
+          console.log("postTweet function failed");
           console.log(error);
         }
       }
