@@ -125,10 +125,9 @@ async function monitorContract() {
         console.log(`Trying to tweet new sale for token #${tokens[0]-289000000}`);
 
         const gateways = [
-          'dweb.link',
           'ipfs.io',
-          'gateway.ipfs.io',
-          'cf-ipfs.com'
+          'dweb.link',
+          'gateway.ipfs.io'
         ];
 
         let uploaded = false;
@@ -140,11 +139,11 @@ async function monitorContract() {
               await getFile(
                 `https://${gateways[i]}/ipfs/QmTAnSRKEiZ2Ef2NmSX4oeKnHYKX2KK9jcYyJngWH7LvRt/${tokens[0]}.mp4`,
                 `./mp4/${tokens[0]}.mp4`
-              ).then(uploaded = true);
-            } catch (error) {
-              console.log('error catching during getFile process');
-              console.log(error);
-            }
+              ).then(uploaded = true).catch((error) => {
+                console.log('error catching during getFile process');
+                console.log(error);
+              });
+            } finally {}
           }
         }
 

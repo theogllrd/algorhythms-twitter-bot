@@ -10,7 +10,7 @@ async function getFile(url, path) {
             method: "get",
             url: url,
             responseType: "stream",
-            timeout: 300000
+            timeout: 500000
         }).then((response) => {
             response.data.on('end', resolve);
             response.data.pipe(fs.createWriteStream(path));
