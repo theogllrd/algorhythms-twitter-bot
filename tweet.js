@@ -14,8 +14,9 @@ async function getFile(url, path) {
         }).then((response) => {
             response.data.on('end', resolve);
             response.data.pipe(fs.createWriteStream(path));
-        }).catch((err) => {
-            console.log(err);
+        }).catch((error) => {
+            console.log("catching error in getFile function");
+            console.log(error);
             reject();
         });
     });
