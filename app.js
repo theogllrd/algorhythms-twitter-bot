@@ -131,16 +131,20 @@ async function monitorContract() {
           'cf-ipfs.com'
         ];
 
+        let uploaded = false;
+
         for (let i=0; i < gateways.length; i++) {
-          try {
-            console.log('trying to download file with gateway: '+gateways[i]);
-            await getFile(
-              `https://${gateways[i]}/ipfs/QmTAnSRKEiZ2Ef2NmSX4oeKnHYKX2KK9jcYyJngWH7LvRt/${tokens[0]}.mp4`,
-              `./mp4/${tokens[0]}.mp4`
-            );
-            break;
-          } catch (error) {
-            console.log(error);
+          if(!uploaded) {
+            try {
+              console.log('trying to download file with gateway: '+gateways[i]);
+              await getFile(
+                `https://${gateways[i]}/ipfs/QmTAnSRKEiZ2Ef2NmSX4oeKnHYKX2KK9jcYyJngWH7LvRt/${tokens[0]}.mp4`,
+                `./mp4/${tokens[0]}.mp4`
+              ).then(uploaded = true);
+            } catch (error) {
+              console.log('error catching during getFile process');
+              console.log(error);
+            }
           }
         }
 
