@@ -84,7 +84,7 @@ async function monitorContract() {
         // token(s) part of the transaction
         if (log.data == '0x' && transferEventTypes.includes(log.topics[0])) {
           const tokenId = web3.utils.hexToNumberString(log.topics[3]);
-          if (tokenId.startsWith('2890')) {
+          if (tokenId.startsWith('64')) {
             tokens.push(tokenId);
           }
         }
@@ -123,7 +123,7 @@ async function monitorContract() {
           )} & other assets has changed hands https://etherscan.io/tx/${transactionHash}`
         );
       } else {
-        console.log(`Trying to tweet new sale for token #${tokens[0] - 289000000}`);
+        console.log(`Trying to tweet new sale for token #${tokens[0] - 64000000}`);
 
         const gateways = [
           'ipfs.io',
@@ -138,7 +138,7 @@ async function monitorContract() {
             try {
               console.log('trying to download file with gateway: ' + gateways[i]);
               await getFile(
-                `https://${gateways[i]}/ipfs/QmTAnSRKEiZ2Ef2NmSX4oeKnHYKX2KK9jcYyJngWH7LvRt/${tokens[0]}.mp4`,
+                `https://${gateways[i]}/ipfs/QmcphuTiyoMByJkPWuiMXpiVxojs2YReYbN6jaJdi7KSw3/${tokens[0]}.mp4`,
                 `./mp4/${tokens[0]}.mp4`
               ).then(uploaded = true).catch((error) => {
                 console.log('error catching during getFile process');
@@ -152,7 +152,7 @@ async function monitorContract() {
 
         try {
           await postTweet(
-            `Algo(Beat) #${tokens[0] - 289000000} has changed hands ${market.site}${process.env.CONTRACT_ADDRESS}/${tokens[0]} 🎵`,
+            `Algo[Rhythm] #${tokens[0] - 64000000} has changed hands ${market.site}${process.env.CONTRACT_ADDRESS}/${tokens[0]} 🎵`,
             `${__dirname}/mp4/${tokens[0]}.mp4`
           );
         } catch (error) {
