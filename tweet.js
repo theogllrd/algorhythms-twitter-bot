@@ -1,11 +1,15 @@
 const { TwitterApi } = require('twitter-api-v2');
 const axios = require('axios');
 const fs = require('fs');
+const axiosRetry = require('axios-retry');
 require('dotenv').config();
+
+axiosRetry(axios, { retries: 5 });
 
 // download nft from ipfs
 async function getFile(url, path) {
     return new Promise((resolve, reject) => {
+    console.log('jump inside getFile function');
         axios({
             method: "get",
             url: url,
