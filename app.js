@@ -4,6 +4,7 @@ const axios = require('axios');
 const { ethers } = require('ethers');
 const retry = require('async-retry');
 const _ = require('lodash');
+require('dotenv').config();
 
 // local
 const { markets } = require('./markets.js');
@@ -31,7 +32,7 @@ async function monitorContract() {
     })
     .on('data', async (data) => {
       const transactionHash = data.transactionHash.toLowerCase();
-      
+
       // duplicate transaction - skip process
       if (transactionHash == lastTransactionHash) {
         return;
@@ -83,7 +84,7 @@ async function monitorContract() {
         // token(s) part of the transaction
         if (log.data == '0x' && transferEventTypes.includes(log.topics[0])) {
           const tokenId = web3.utils.hexToNumberString(log.topics[3]);
-          if(tokenId.startsWith('2890')) {
+          if (tokenId.startsWith('2890')) {
             tokens.push(tokenId);
           }
         }
@@ -103,7 +104,7 @@ async function monitorContract() {
         }
       }
 
-      if(!(tokens.length > 0)) {
+      if (!(tokens.length > 0)) {
         return;
       }
       // remove any dupes
@@ -122,7 +123,7 @@ async function monitorContract() {
           )} & other assets has changed hands https://etherscan.io/tx/${transactionHash}`
         );
       } else {
-        console.log(`Trying to tweet new sale for token #${tokens[0]-289000000}`);
+        console.log(`Trying to tweet new sale for token #${tokens[0] - 289000000}`);
 
         const gateways = [
           'ipfs.io',
@@ -132,10 +133,10 @@ async function monitorContract() {
 
         let uploaded = false;
 
-        for (let i=0; i < gateways.length; i++) {
-          if(!uploaded) {
+        for (let i = 0; i < gateways.length; i++) {
+          if (!uploaded) {
             try {
-              console.log('trying to download file with gateway: '+gateways[i]);
+              console.log('trying to download file with gateway: ' + gateways[i]);
               await getFile(
                 `https://${gateways[i]}/ipfs/QmTAnSRKEiZ2Ef2NmSX4oeKnHYKX2KK9jcYyJngWH7LvRt/${tokens[0]}.mp4`,
                 `./mp4/${tokens[0]}.mp4`
@@ -143,16 +144,18 @@ async function monitorContract() {
                 console.log('error catching during getFile process');
                 console.log(error);
               });
-            } finally {}
+            } catch (error) {
+              console.log(error);
+            }
           }
         }
 
         try {
           await postTweet(
-            `Algo(Beat) #${tokens[0]-289000000} has changed hands ${market.site}${process.env.CONTRACT_ADDRESS}/${tokens[0]} 🎵`,
+            `Algo(Beat) #${tokens[0] - 289000000} has changed hands ${market.site}${process.env.CONTRACT_ADDRESS}/${tokens[0]} 🎵`,
             `${__dirname}/mp4/${tokens[0]}.mp4`
           );
-        } catch(error) {
+        } catch (error) {
           console.log("postTweet function failed");
           console.log(error);
         }

@@ -9,7 +9,7 @@ axiosRetry(axios, { retries: 5 });
 // download nft from ipfs
 async function getFile(url, path) {
     return new Promise((resolve, reject) => {
-    console.log('jump inside getFile function');
+        console.log('jump inside getFile function');
         axios({
             method: "get",
             url: url,
@@ -29,6 +29,7 @@ async function getFile(url, path) {
 // Tweet a text-based status
 async function postTweet(tweetText, tweetMedia) {
 
+
     const userClient = new TwitterApi({
         appKey: process.env.CONSUMER_KEY,
         appSecret: process.env.CONSUMER_SECRET,
@@ -44,14 +45,9 @@ async function postTweet(tweetText, tweetMedia) {
         await userClient.v1.tweet(tweetText, {
             media_ids: [media_id]
         });
-        console.log('Successfully tweeted: '+tweetText);
+        console.log('Successfully tweeted: ' + tweetText);
     } catch (error) {
-        if (error.response) {
-            console.log(error.response.data);
-            console.log(error.response.status);
-          } else {
-            console.error(error.message);
-          }
+        console.log(error);
     }
 }
 
